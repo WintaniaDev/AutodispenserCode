@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include partials/head %>
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <br /><br />
+      <center>
+        <div class="card col col-lg-5">
+          <div class="card-header">
+            <h1><%= title %></h1>
+          </div>
+          <div class="card-body">
+            <form action="" method="POST">
+              <div class="form-group">
+                <label for="Email">Email address</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="Email"
+                  aria-describedby="emailHelp"
+                  placeholder="Enter email"
+                />
+                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  placeholder="Password"
+                />
+              </div>
+              <div class="form-group">
+                <label for="re-password">Re-Password</label>
+                <input
+                  type="re-password"
+                  class="form-control"
+                  id="re-password"
+                  placeholder="re-enter password"
+                />
+              </div>
+
+              <button type="submit" class="btn btn-lg btn-primary">
+                submit
+              </button>
+            </form>
+          </div>
+
+          <!-- <div class="card-footer text-muted">
+            <div class="d-flex justify-content-center links">
+              Have already an account?<a href="/signin" class="ml-2">Sign in</a>
+            </div>
+          </div> -->
+        </div>
+      </center>
+    </div>
+  </body>
+</html>
