@@ -15,6 +15,18 @@ function reloadPage() {
 $(document).ready(function() {
   $("#Register").hide();
   $("#notRegister").show();
+
+  $("#OutStock1").hide();
+  $("#OutStock2").hide();
+  $("#OutStock3").hide();
+  $("#OutStock4").hide();
+  $("#OutStock5").hide();
+  $("#OutStock6").hide();
+  $("#OutStock7").hide();
+  $("#OutStock8").hide();
+  $("#OutStock9").hide();
+  $("#OutStock10").hide();
+
   // $("#registForm")[0].reset();
   $("#adminName").text("Hi Admin : Sarawut");
   // $('#addUser').click(function() {
@@ -22,6 +34,82 @@ $(document).ready(function() {
   //       setTimeout(reloadPage(),2000);
   // });
 });
+///////////////////////////////////////////////////////////////////////////
+var statusStock = [];
+var Count = 0;
+var CountStock = [];
+var arrSize = 3;
+var j = 1;
+var rnd = 0;
+function empty() {
+  //empty your array
+  CountStock = [];
+  // while (CountStock.length) {
+  //   CountStock.pop();
+  // }
+}
+
+// var stockRef = firebase.database().ref("/DrugStock/Stock/");
+// var stockRef = firebase.database().ref("/Test/FSR_Data/");
+
+var stockRef = firebase.database().ref("/DrugStock/");
+stockRef.orderByKey().on("value", function(snapshot) {
+  // stockRef.on("child_changed", function(snapshot) {
+  snapshot.forEach(function(childSnapshot) {
+    var childKey = childSnapshot.key;
+    var childData = childSnapshot.val();
+    $("#Dname" + childKey).text(childData.Name);
+    $("#Dos" + childKey).text(childData.Dosage);
+    $("#Stk" + childKey).text(10 - childData.Stock + " / 10");
+    var outStock_ID = "";
+    var stock_ID = "";
+    if (childData.Stock == 10) {
+      // console.log(childData.Stock);
+      stock_ID += "#Stock" + parseInt(childKey).toString();
+      outStock_ID += "#OutStock" + parseInt(childKey).toString();
+      $(stock_ID).hide();
+      $(outStock_ID).show();
+    }
+    if (childData.Stock != 10) {
+      stock_ID += "#Stock" + parseInt(childKey).toString();
+      outStock_ID += "#OutStock" + parseInt(childKey).toString();
+      $(stock_ID).show();
+      $(outStock_ID).hide();
+    }
+  });
+});
+// ref1.orderByChild("F_ID").on("value", function(snapshot) {
+
+//  console.log(i);
+//   for (rnd in CountStock) {
+//     if (CountStock[rnd] === 3) {
+//       outStock_ID = "";
+//       stock_ID = "";
+//       stock_ID += "#Stock" + (parseInt(rnd) + 1).toString();
+//       outStock_ID += "#OutStock" + (parseInt(rnd) + 1).toString();
+//       //   // // console.log(btnLock_ID);
+//       //   // // console.log(btnUnLock_ID);
+//       $(stock_ID).hide();
+//       $(outStock_ID).show();
+//       // Count = 0;
+//     }
+//     rnd = 0;
+//   }
+//   console.log(rnd);
+//   // while (CountStock.length) {
+//   //   CountStock.pop();
+//   // }
+// }
+// //////////////////////////////////////////////////////////////////////////////////////////////
+
+function addStock(Data, CH) {
+  var stockUpdate = {};
+  stockUpdate["/DrugStock/" + (parseInt(CH) + 1).toString() + "/Stock/"] = Data;
+  firebase
+    .database()
+    .ref()
+    .update(stockUpdate);
+}
 //
 // function addUsertoDB(){
 //        var  First_Name = $('#firstName').val();
@@ -179,6 +267,7 @@ registStatusRef.once("value", function(snapshot) {
   // console.log(NumID);
 });
 
+var ref1 = firebase.database().ref("/User/usersRegistStatus/");
 ref1.orderByChild("F_ID").on("value", function(snapshot) {
   var Val = snapshot.val();
   var num = 0;

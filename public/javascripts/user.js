@@ -7,7 +7,7 @@ var config = {
   messagingSenderId: "637755215079"
 };
 firebase.initializeApp(config);
-
+var database = firebase.database();
 // window.onload = function() {
 //   init();
 // };
@@ -25,27 +25,7 @@ firebase.initializeApp(config);
 //       var providerData = user.providerData;
 
 //       addDataProfileUser(uid, displayName, email, photoURL, phoneNumber);
-//       // console.log("displayName :" + displayName);
-//       // console.log("email :" + email);
-//       // console.log("photoURL :" + photoURL);
-//       // console.log("uid :" + uid);
-//       // console.log(providerData);
 
-//       // $("#user_Name").text(displayName);
-//       // $("#user_Email").text(email);
-//       // if (phoneNumber != null) {
-//       //   $("#user_Tel").text(phoneNumber);
-//       // } else {
-//       //   $("#user_Tel").text("-");
-//       // }
-//       // $("#userName").text("Hi : " + displayName);
-//     } else {
-//       ///////////////////////////////////////////////////
-//       checkFingerlogin();
-
-//       // alert("Please Signin !!");
-//       // window.location.href = "index.html";
-//       ///////////////////////////////////////////////////
 //     }
 //   },
 //   function(error) {
@@ -121,60 +101,61 @@ firebase.initializeApp(config);
 //     .database()
 //     .ref()
 //     .update(updateData);
+//   //
+//   var ref = firebase.database().ref("users/");
+//   ref.on("value", function(snapshot) {
+//     snapshot.forEach(function(childSnapshot) {
+//       var childKey = childSnapshot.key;
+//       var childData = childSnapshot.val();
+//       // console.log(childKey + childData.uid );
+//       if (childData.uid == userId) {
+//         // console.log(childData.uid);
+//         // console.log(childData.registStatus);
+//         if (childData.registStatus == "") {
+//           updateData["/users/" + userId + "/"] = data;
+//           firebase
+//             .database()
+//             .ref()
+//             .update(updateData);
+//           console.log("Add Data No regist finger ");
+//           console.log(childData.uid);
+//         }
+//         if (childData.registStatus == "Registered") {
+//           console.log("Regist finger ");
+//           console.log(childData.uid);
+//         }
+//       } else {
+//         if (childData.registStatus !== "") {
+//           updateData["/users/" + userId + "/"] = data;
+//           firebase
+//             .database()
+//             .ref()
+//             .update(updateData);
+//           console.log("Add Data No regist finger ");
+//           console.log(childData.uid);
+//         }
+//       }
+//       //   console.log( Key + " " + Name + " "+ Stock + " " + Dosage);
+//       // $("#userName").text("Hi : " +  F_name  );
+//     });
 
-//  var ref = firebase.database().ref('users/');
-//  ref.on("value", function(snapshot) {
-//    snapshot.forEach(function(childSnapshot) {
-//        var childKey = childSnapshot.key;
-//        var childData = childSnapshot.val();
-//        // console.log(childKey + childData.uid );
-//        if(childData.uid == userId ){
-//            // console.log(childData.uid);
-//            // console.log(childData.registStatus);
-//          if(childData.registStatus == ""){
-//              updateData['/users/'+ userId + '/'] = data;
-//              firebase.database().ref().update(updateData);
-//                  console.log("Add Data No regist finger ");
-//                  console.log(childData.uid);
-//            }
-//          if(childData.registStatus == "Registered"){
-//                  console.log("Regist finger ");
-//                  console.log(childData.uid);
-//          }
-//
-//        }
-//        else{
-//          if(childData.registStatus !== ""){
-//              updateData['/users/'+ userId + '/'] = data;
-//              firebase.database().ref().update(updateData);
-//                  console.log("Add Data No regist finger ");
-//                  console.log(childData.uid);
-//            }
-//        }
-//     //   console.log( Key + " " + Name + " "+ Stock + " " + Dosage);
-//            // $("#userName").text("Hi : " +  F_name  );
-// });
-//
-//
-//          //  Object.keys(Val).map(function (key) {
-//          //       if(key == userId){
-//          //         if(Val[key].registStatus !== "Registered"){
-//          //           // updateData['/users/'+ userId + '/'] = data;
-//          //           // firebase.database().ref().update(updateData);
-//          //            console.log("Add Data No regist finger ");
-//          //         }
-//          //       }
-//          //      if(key !== userId){
-//          //        if(Val[key].registStatus !== "Registered"){
-//          //          updateData['/users/'+ userId + '/'] = data;
-//          //          firebase.database().ref().update(updateData);
-//          //           console.log("data");
-//          //        }
-//          //      }
-//          // });
-//
-//
-//  });
+//     //  Object.keys(Val).map(function (key) {
+//     //       if(key == userId){
+//     //         if(Val[key].registStatus !== "Registered"){
+//     //           // updateData['/users/'+ userId + '/'] = data;
+//     //           // firebase.database().ref().update(updateData);
+//     //            console.log("Add Data No regist finger ");
+//     //         }
+//     //       }
+//     //      if(key !== userId){
+//     //        if(Val[key].registStatus !== "Registered"){
+//     //          updateData['/users/'+ userId + '/'] = data;
+//     //          firebase.database().ref().update(updateData);
+//     //           console.log("data");
+//     //        }
+//     //      }
+//     // });
+//   });
 // }
 
 // function Signout() {
@@ -197,9 +178,11 @@ function reloadPage() {
   location.reload();
 }
 
-function gotoHomepage() {
-  window.location = "index.html";
-}
+// function gotoHomepage() {
+//   window.location = "index.html";
+// }
+
+var name, email, photoUrl, uid, emailVerified;
 
 var Data = [];
 var Drawer = [];
@@ -247,19 +230,80 @@ $(document).ready(function() {
   $("#Lock10").click(function() {
     activeDrawer_Status(10);
   });
+
   $("#btnLogout").click(function() {
     // Clear_Status();
     // var signOut = setTimeout(Signout, 1000);
-    $.post(
-      "/logout"
-      // { user: user, password: pass },
-      // function(data) {
-      //   // if (data === "done") {
-      //   //   alert("login success");
-      //   // }
-      // }
-    );
+    // $.post("/logout");
+    $.post("/logout", function(data, status) {
+      // alert("Status: " + status);
+    }).done(function() {
+      var clearStatusfinger = {};
+      var clearFoundID = {};
+      var clearStatusActive = {};
+      clearStatusfinger["/Device/fingerSearch/StatusSearch/Status/"] = 0;
+      clearFoundID["/Device/fingerSearch/Found_ID/ID/"] = 0;
+      // clearStatusActive["/Device/fingerSearch/Status/"] = 0;
+      firebase
+        .database()
+        .ref()
+        .update(clearStatusfinger);
+      firebase
+        .database()
+        .ref()
+        .update(clearFoundID);
+      firebase
+        .database()
+        .ref()
+        .update(clearStatusActive);
+      Clear_Status();
+      window.location.href = "/";
+    });
   });
+
+  function Clear_Status() {
+    var updatedelelteStatus = {};
+    var updateenrollStatus = {};
+    var updatefingersearchStatus = {};
+    var updateopendrawStatus = {};
+
+    updatedelelteStatus["/Device/deleteFinger/Status/"] = 0;
+    updateenrollStatus["/Device/enrollMode/Status/"] = 0;
+    updatefingersearchStatus["/Device/fingerSearch/Status/"] = 0;
+    updateopendrawStatus["/Device/openDrawer/Status/"] = 0;
+
+    firebase
+      .database()
+      .ref()
+      .update(updatedelelteStatus);
+    firebase
+      .database()
+      .ref()
+      .update(updateenrollStatus);
+    firebase
+      .database()
+      .ref()
+      .update(updatefingersearchStatus);
+    firebase
+      .database()
+      .ref()
+      .update(updateopendrawStatus);
+
+    //Lock all Drug Drawer
+    for (var i = 1; i <= 10; i++) {
+      var lockAll_State = {};
+      lockAll_State[
+        "/Device/openDrawer/drugDrawer/" + i.toString() + "/Status/"
+      ] = 1;
+      firebase
+        .database()
+        .ref()
+        .update(lockAll_State);
+    }
+    // clearTimeout(reload);
+    // clearTimeout(Homepage);
+    // return true;
+  }
 
   $("#btnChooseDrug").click(function() {
     var updateOpendrug = {};
@@ -269,6 +313,51 @@ $(document).ready(function() {
       .ref()
       .update(updateOpendrug);
   });
+
+  // var RegistRef = database.ref("/User/usersRegistStatus/");
+  // var FoundRef = database.ref("Device/fingerSearch/Found_ID/");
+  // // var CheckRef = database.ref("Device/fingerSearch/");
+
+  // FoundRef.once("value").then(function(snapshot) {
+  //   Found_ID = snapshot.child("ID").val(); // {first:"Ada",last:"Lovelace"}
+  //   RegistRef.once("value").then(function(snapshot) {
+  //     snapshot.forEach(function(childSnapshot) {
+  //       var childData = childSnapshot.val();
+  //       // console.log(childData);
+  //       var user_ID = childData.F_ID;
+  //       Name = childData.username;
+  //       Email = childData.email;
+  //       var Tel = childData.phoneNumber;
+  //       var RegistStatus = childData.registStatus;
+  //       console.log(user_ID);
+  //       console.log(Found_ID);
+  //       if (user_ID === Found_ID) {
+  //         console.log(user_ID + " == " + Found_ID);
+  //         if (RegistStatus == "Registered") {
+  //           $("#user_Name").text(Name);
+  //           $("#user_Email").text(Email);
+  //           // $("#user_Tel").text(Tel);
+  //           $("#userName").text("Hi : " + Name);
+  //           // var Name = Name;
+  //           // var Email = Email;
+  //           // window.location.href = "/profiles";
+  //           // window.location("/profiles");
+  //         } else {
+  //           // res.redirect("/");
+  //           // window.location("/");
+  //           window.location.href = "/";
+  //         }
+  //       } else {
+  //         // res.redirect("/");
+  //         // window.location("/");
+  //         alert(
+  //           "    Your account not registed fingerprint \n    Please contact to admin  "
+  //         );
+  //         window.location.href = "/";
+  //       }
+  //     });
+  //   });
+  // });
 });
 
 function setImageSource(imageId, imageSrc) {

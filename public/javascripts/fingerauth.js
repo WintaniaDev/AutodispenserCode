@@ -18,57 +18,42 @@ function activeStatus(status) {
 $(document).ready(function() {
   $("#load").hide();
   $("#btnFPScan").show();
-  // $("#btnFPScan").click(function() {
-  //   $.post("/checkfingauth", function(data, status) {
-  //     alert("Data: " + data + "\nStatus: " + status);
-  //   });
-  //   // console.log("Test !!!");
-  // });
   $("#btnFPScan").click(function() {
-    // console.log("On Click!!!");
     $("#load").show();
     $("#btnFPScan").hide();
+    var updates = {};
+    updates["/Device/fingerSearch/FingerNotfound/Status/"] = 0;
+    database.ref().update(updates);
     activeStatus(1);
+   
+  });
 
-    setInterval(function() {
-      var Status;
-      var ID;
-      var Match;
-      var ref = database.ref("Device/fingerSearch/");
-      var ref1 = database.ref("Device/fingerSearch/Found_ID/");
-      var ref2 = database.ref("/Device/fingerSearch/StatusSearch/");
-
-      ref1.once("value").then(function(snapshot) {
-        ID = snapshot.child("ID").val(); // {first:"Ada",last:"Lovelace"}
-        // console.log(ID);
-      });
-
-      ref.once("value").then(function(snapshot) {
-        Status = snapshot.child("Status").val(); // {first:"Ada",last:"Lovelace"}
-        // console.log(Status);
-
-        if (Status == 0) {
-          ref2.once("value").then(function(snapshot) {
-            Match = snapshot.child("Status").val(); // {first:"Ada",last:"Lovelace"}
-            // console.log(Status);
-            if (Match == 1) {
-              if (ID == 0) {
-                alert("You are not log in!!");
-                var myvar = setTimeout(location.reload(), 2000);
-              } else {
-                // window.location = "/users";
-                window.location = "/fingerauth";
-                // clearTimeout(myVar);
-              }
-            }
-            if (Match == 0) {
-              alert("Please Log in again!!");
-              window.location = "/fingerauth";
-            }
-          });
-          //   console.log("Check!!");
+  var Checkref = database.ref("Device/fingerSearch/");
+  var CheckstatusSearch = database.ref("Device/fingerSearch/StatusSearch/");
+  var CheckFingernotFound = database.ref("Device/fingerSearch/FingerNotfound/")
+  CheckstatusSearch.on("value", function(snapshot) {
+    var Status = snapshot.child("Status").val();
+    Checkref.on("value", function(snapshot) {
+      var checkStatus = snapshot.child("Status").val();
+      CheckFingernotFound.on("value",function(snapshot){
+        var CheckNotfound = snapshot.child("Status").val();;
+        // console.log("checkStatus :" + checkStatus);
+        // console.log("Status : " + Status);
+        // console.log("check not found : " + CheckNotfound);
+        if (checkStatus == 0) {
+          // $.get("/checkfingauth");
+          if (Status == 1) {
+            window.location.href = "/checkfingauth";
+          }
+         
+        }
+        else{
+          if(CheckNotfound == 1){
+            alert("Fingerprint Not Found!! \n Please try to login with fingerprint again");
+            window.location.href = "/fingerauth";
+          }
         }
       });
-    }, 1000);
+    });
   });
 });

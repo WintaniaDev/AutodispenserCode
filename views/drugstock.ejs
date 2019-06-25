@@ -9,6 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <title>Drug Stock</title>
+  <link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
   <!-- Custom fonts for this template-->
   <!-- <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <!-- Page level plugin CSS-->
@@ -162,7 +163,10 @@
         <div class="card-header">
           <i class="fas fa-book-medical"></i>
           DrugStock</div>
-          <div class="card-body" style="align-items:center">
+          <div class="card-body">
+            <div style="text-align:end">
+              <button type="button" class="btn btn-primary" style="margin: 10px;" >Reload Status</button>
+            </div>
             <table class="table table-striped" style="text-align:center">
             <thead>
             <tr>
@@ -170,82 +174,74 @@
             <th scope="col">Name</th>
             <th scope="col">Dosage (ml/cc)</th>
             <th scope="col">In Stock</th>
-            <th scope="col">Edit</th>
+            <th scope="col">Status</th>
             <!-- <th scope="col">Input</th> -->
             </tr>
             </thead>
             <tbody>
             <tr>
             <th scope="row">1</th>
-            <td>MED1</td>
-            <td>20</td>
-            <td>2 / 3</td>
-            <td><button class="btn btn-primary">EDIT</button></td>
+            <td id="Dname1"></td>
+            <td id="Dos1"></td>
+            <td id="Stk1" ></td>
+            <td><button  type="button" class="btn btn-success" id="Stock1" >In Stock</button><button type="button" class="btn btn-danger" id="OutStock1">Out Of Stock</button></td>
             </tr>
             <tr>
             <th scope="row">2</th>
-            <td>MED2</td>
-            <td>42</td>
-            <td>3 / 3</td>
-            <td><button class="btn btn-primary">EDIT</button></td>
-            </tr>
+            <td id="Dname2"></td>
+            <td id="Dos2"></td>
+            <td id="Stk2"></td>
+            <td><button  type="button" class="btn btn-success" id="Stock2" >In Stock</button><button type="button" class="btn btn-danger" id="OutStock2">Out Of Stock</button></td>            </tr>   
             <tr>
             <th scope="row">3</th>
-            <td>MED3</td>
-            <td>60</td>
-            <td>1 / 3</td>
-            <td><button class="btn btn-primary">EDIT</button></td>
-            </tr>
+            <td id="Dname3"></td>
+            <td id="Dos3"></td>
+            <td id="Stk3"></td>
+            <td><button  type="button" class="btn btn-success" id="Stock3" >In Stock</button><button type="button" class="btn btn-danger" id="OutStock3">Out Of Stock</button></td>            </tr>
             <tr>
             <th scope="row">4</th>
-            <td>MED4</td>
-            <td>45</td>
-            <td>2 / 3</td>
-            <td><button class="btn btn-primary">EDIT</button></td>
-            </tr>
+            <td id="Dname4"></td>
+            <td id="Dos4"></td>
+            <td id="Stk4"></td>
+            <td><button  type="button" class="btn btn-success" id="Stock4" >In Stock</button><button type="button" class="btn btn-danger" id="OutStock4">Out Of Stock</button></td>            </tr>
             <tr>
             <th scope="row">5</th>
-            <td>MED5</td>
-            <td>120</td>
-            <td>3 / 3</td>
-            <td><button class="btn btn-primary">EDIT</button></td>
-            </tr>
+            <td id="Dname5"></td>
+            <td id="Dos5"></td>
+            <td id="Stk5"></td>
+            <td><button  type="button" class="btn btn-success" id="Stock5" >In Stock</button><button type="button" class="btn btn-danger" id="OutStock5">Out Of Stock</button></td>            </tr>
             <tr>
             <th scope="row">6</th>
-            <td>MED6</td>
-            <td>60</td>
-            <td>0 / 3</td>
-            <td><button class="btn btn-primary">EDIT</button></td>
-            </tr>
+            <td id="Dname6"></td>
+            <td id="Dos6"></td>
+            <td id="Stk6"></td>
+            <td><button  type="button" class="btn btn-success" id="Stock6" >In Stock</button><button type="button" class="btn btn-danger" id="OutStock6">Out Of Stock</button></td>            </tr>
             <tr>
             <th scope="row">7</th>
-            <td>MED7</td>
-            <td>15</td>
-            <td>1 / 3</td>
-            <td><button class="btn btn-primary">EDIT</button></td>
-            </tr>
+            <td id="Dname7"></td>
+            <td id="Dos7"></td>
+            <td id="Stk7"></td>
+            <td><button  type="button" class="btn btn-success" id="Stock7" >In Stock</button><button type="button" class="btn btn-danger" id="OutStock7">Out Of Stock</button></td>            </tr>
             <tr>
             <th scope="row">8</th>
-            <td>MED8</td>
-            <td>25</td>
-            <td>3 / 3</td>
-            <td><button class="btn btn-primary">EDIT</button></td>
+            <td id="Dname8"></td>
+            <td id="Dos8"></td>
+            <td id="Stk8"></td>
+            <td><button  type="button" class="btn btn-success" id="Stock8" >In Stock</button><button type="button" class="btn btn-danger" id="OutStock8">Out Of Stock</button></td>       
             </tr>
             <tr>
             <th scope="row">9</th>
-            <td>MED9</td>
-            <td>40</td>
-            <td>1 / 3</td>
-            <td><button class="btn btn-primary">EDIT</button></td>
+            <td id="Dname9"></td>
+            <td id="Dos9"></td>
+            <td id="Stk9"></td>
+            <td><button  type="button" class="btn btn-success" id="Stock9" >In Stock</button><button type="button" class="btn btn-danger" id="OutStock9">Out Of Stock</button></td>         
             </tr>
             <tr>
             <th scope="row">10</th>
-            <td>MED10</td>
-            <td>30</td>
-            <td>3 / 3</td>
-            <td><button class="btn btn-primary">EDIT</button></td>
-            <!-- <td><input type="text"><label for="id">ID</label></td> -->
-
+            <td id="Dname10"></td>
+            <td id="Dos10"></td>
+            <td id="Stk10"></td>
+            <td><button  type="button" class="btn btn-success" id="Stock10" >In Stock</button><button type="button" class="btn btn-danger" id="OutStock10">Out Of Stock</button></td>            <!-- <td><input type="text"><label for="id">ID</label></td> -->
             </tr>
             </tbody>
             </table>
